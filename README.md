@@ -1,6 +1,6 @@
-# git_hub_practice
-I am dcreating this repo to practice the commands of GIT
+# This is GIT
 
-# Make change in opo file
+So , now i am going to deal with the git conflict. This file i want to keep.
 
-testing conflict
+Now pull ko dekhna hai
+
