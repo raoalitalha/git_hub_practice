@@ -1,9 +1,4 @@
-# git_hub_practice
+# This is GIT
 
-
-
-
-testing conflit
-=========
-I am dcreating this repo to practice the commands of GIT and GITHub
+So , now i am going to deal with the git conflict
 
