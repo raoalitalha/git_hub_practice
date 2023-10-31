@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>sdsd.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="project-information">Project Information:</h1>
+<p><code>Project Statement:</code></p>
+<p><code>Client:</code></p>
+<p>One of the leading vehicle fuel pump manufacturers. These pumps are used to take fuel
+as input and push fuel as output at a high velocity. More the velocity, more is the speed at
+which vehicle will move.</p>
+<p><code>Business Problem:</code></p>
+<p>Machines which manufacture the pumps. Unplanned machine downtime
+which is leading to loss of productivity.</p>
+<p><code>Business objective:</code> Minimize unplanned machine downtime.</p>
+<p><code>Business constraint:</code> Minimize maintenance cost.</p>
+<p><code>Business success criteria:</code> Reduce the unplanned downtime by at least 10%</p>
+<p><code>Economic success criteria:</code> Achieve a cost saving of at least $1M&quot;</p>
+<h1 id="about-this-report">About This `Report:</h1>
+<p><code>Prepared by :</code>Muhammad Ali Talha<br>
+<code>Submitted on:</code> 2023-10-31<br>
+<code>Software Used:</code> PostgreSQL</p>
+<blockquote>
+<h1 id="eda-on-sql-to-get-insdes-from-db">EDA ON SQL TO GET INSDES FROM DB</h1>
+</blockquote>
+<h1 id="1--creating-a-databse-and-table-in-sql-and-declaring-data-types">1 : Creating a Databse and Table in SQL and declaring `Data Types</h1>
+<ol>
+<li>Created a new <code>Database</code> named it <code>intern1</code> .</li>
+<li>In the <code>intern</code> , i created a table with the name of <code>machine_downtime</code>.</li>
+<li>The code for creating the table is :</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> (<span class="hljs-built_in">Date</span> (<span class="hljs-built_in">date</span>), Machine_ID (<span class="hljs-built_in">varchar</span> <span class="hljs-number">255</span>),Assembly_Line_No (<span class="hljs-built_in">varchar</span> <span class="hljs-number">255</span>),Hydraulic_Pressure(bar) (<span class="hljs-built_in">float</span>),Coolant_Pressure (<span class="hljs-built_in">float</span>),Air_System_Pressure(bar) (<span class="hljs-built_in">float</span>),Coolant_Temperature (<span class="hljs-built_in">float</span>),Hydraulic_Oil_Temperature(Â°C) (<span class="hljs-built_in">float</span>),Spindle_Bearing_Temperature(Â°C) (<span class="hljs-built_in">float</span>),Spindle_Vibration(Âµm) (<span class="hljs-built_in">float</span>),Tool_Vibration(Âµm) (<span class="hljs-built_in">float</span>),Spindle_Speed(RPM) (<span class="hljs-built_in">float</span>),Voltage(volts) (<span class="hljs-built_in">float</span>),Torque(Nm) (<span class="hljs-built_in">float</span>),Cutting(kN) (<span class="hljs-built_in">float</span>),Downtime (<span class="hljs-built_in">varchar</span> <span class="hljs-number">255</span>)
+</div></code></pre>
+<h1 id="2-change-the-column-name-date-formatting-in-excel">2: Change the column name <code>Date</code> formatting in <code>Excel</code>.</h1>
+<ol>
+<li>In our CSV file the column contain name <code>Date</code> the date format in the CSV was <code>dd-mm-yyy</code> .</li>
+<li>This date format is not accepted in <code>SQL</code>.</li>
+<li>Hence, it was required to reformat it and change it into <code>yyy-mm-dd</code>.</li>
+<li>Save the file after changes being made.</li>
+</ol>
+<h1 id="3-importing-data-into-the-table-machinedowntime">3: Importing data into the Table <code>machine_downtime</code></h1>
+<ol>
+<li>Right-Click on the database and select the option `Import/Export Data.</li>
+<li>Select the <code>import</code> tab on the top. Provided the path of the <code>CSV</code> file in the dialogue box, Select the file format <code>CSV</code>. and click ok.</li>
+<li>Import was succesfull.</li>
+</ol>
+<h1 id="4--checking-the-count-of-databse-in-sql-and-excel">4 : Checking the count of databse in <code>SQL</code> and <code>EXCEL</code></h1>
+<ol>
+<li>After importing data in the sql. It is important to chheck the exact number of rows are imported in SQL from EXCEL.</li>
+<li>The total number of rows in the <code>Excel</code> is <code>2500</code>.</li>
+<li>We use the query in <code>SQL</code> to chech that</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> 
+	<span class="hljs-keyword">count</span>(*)
+<span class="hljs-keyword">FROM</span>
+	machine_downtime
+</div></code></pre>
+<ol start="4">
+<li>Total number of <code>columns</code> in <code>Excel</code> is <code>14</code> . To check in `sql' we use following:</li>
+</ol>
+<pre class="hljs"><code><div>SELECT count(*)
+FROM information_schema.columns
+WHERE table_name = 'machine_downtime';
+</div></code></pre>
+<h1 id="5-summary-of-the-data-types-of-the-dataset">5: Summary of the data types of the dataset</h1>
+<ol>
+<li>Cheching the datatype of the columns is important.</li>
+<li>It can be done by using this query:</li>
+</ol>
+<pre class="hljs"><code><div>SELECT count(*)
+FROM information_schema.columns
+WHERE table_name = 'machine_downtime';
+
+</div></code></pre>
+<h1 id="6--checking-duplicate-in-whole-dataset">6 : Checking Duplicate in whole dataset.</h1>
+<ol>
+<li>Duplicates always create issues. It is import to figure them out earlier.</li>
+<li>The following query will help in getting the duplicate rows from the dataset.</li>
+<li>It turned out there is no duplicates ass we run the <code>Distinct</code> query.</li>
+</ol>
+<pre class="hljs"><code><div>SELECT 
+   DISTINCT COUNT (*)
+FROM
+   machine_downtime
+</div></code></pre>
+<h1 id="7-checking-data-by-year-month--and-days">7: Checking data by <code>year</code>, <code>month</code> , and <code>days</code>.</h1>
+<ol>
+<li>Check how many <code>years</code> of data we have :</li>
+</ol>
+<pre class="hljs"><code><div>SELECT 
+	DISTINCT COUNT (*)
+FROM
+	machine_downtime
+</div></code></pre>
+<p>It is 2 years</p>
+<ol start="2">
+<li>Check how many <code>Months</code> of data we have :</li>
+</ol>
+<pre class="hljs"><code><div>SELECT COUNT(DISTINCT EXTRACT(MONTH FROM Date)) AS total_months
+FROM machine_downtime;	
+</div></code></pre>
+<pre class="hljs"><code><div>FROM (
+    SELECT EXTRACT(YEAR FROM Date) AS year,
+           COUNT(DISTINCT EXTRACT(MONTH FROM Date)) AS months_in_year
+    FROM machine_downtime
+    GROUP BY EXTRACT(YEAR FROM Date)
+) AS subquery;
+</div></code></pre>
+<p>Its turned out same.</p>
+<ol start="3">
+<li>Calculating the total months across all years:</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">SUM</span>(months_in_year) <span class="hljs-keyword">AS</span> total_months
+<span class="hljs-keyword">FROM</span> (
+    <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> <span class="hljs-built_in">Date</span>) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">year</span>,
+           <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">MONTH</span> <span class="hljs-keyword">FROM</span> <span class="hljs-built_in">Date</span>)) <span class="hljs-keyword">AS</span> months_in_year
+    <span class="hljs-keyword">FROM</span> machine_downtime
+    <span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">EXTRACT</span>(<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">FROM</span> <span class="hljs-built_in">Date</span>)
+) <span class="hljs-keyword">AS</span> subquery;
+</div></code></pre>
+<h1 id="8-statistical-analysis-for-all-the-column-which-are-numerical">8: Statistical analysis for all the column which are `Numerical</h1>
+<ul>
+<li>1 . Min Value</li>
+<li>2 . Max Value</li>
+<li>3 . Average /Mean</li>
+<li>4 . Sum</li>
+<li>5 . Standard Deviation</li>
+<li>6 . Variance</li>
+<li>7 . Median</li>
+<li>8 . Mode
+`</li>
+</ul>
+<h2 id="81-column-analysis-for-hydrolic-pressure">8.1 Column Analysis for <code>Hydrolic Pressure</code></h2>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>,
+    <span class="hljs-keyword">MIN</span>(Hydraulic_Pressure) <span class="hljs-keyword">AS</span> min_Hydraulic_Pressure,
+    <span class="hljs-keyword">MAX</span>(Hydraulic_Pressure) <span class="hljs-keyword">AS</span> max_Hydraulic_Pressure,
+    <span class="hljs-keyword">AVG</span>(Hydraulic_Pressure) <span class="hljs-keyword">AS</span> avg_Hydraulic_Pressure,
+    <span class="hljs-keyword">SUM</span>(Hydraulic_Pressure) <span class="hljs-keyword">AS</span> sum_Hydraulic_Pressure,
+    <span class="hljs-keyword">STDDEV</span>(Hydraulic_Pressure) <span class="hljs-keyword">AS</span> stddev_Hydraulic_Pressure,
+    <span class="hljs-keyword">VARIANCE</span>(Hydraulic_Pressure) <span class="hljs-keyword">AS</span> variance_Hydraulic_Pressure,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) <span class="hljs-keyword">AS</span> median_Hydraulic_Pressure,
+    <span class="hljs-keyword">MODE</span>() <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) <span class="hljs-keyword">AS</span> mode_Hydraulic_Pressure
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>&quot;count&quot;</th>
+<th>&quot;min_hydraulic_pressure&quot;</th>
+<th>&quot;max_hydraulic_pressure&quot;</th>
+<th>&quot;avg_hydraulic_pressure&quot;</th>
+<th>&quot;sum_hydraulic_pressure&quot;</th>
+<th>&quot;stddev_hydraulic_pressure&quot;</th>
+<th>&quot;variance_hydraulic_pressure&quot;</th>
+<th>&quot;median_hydraulic_pressure&quot;</th>
+<th>&quot;mode_hydraulic_pressure&quot;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2500</td>
+<td>-14.32645418</td>
+<td>191</td>
+<td>101.40908377755412</td>
+<td>252508.61860610975</td>
+<td>30.28930063257439</td>
+<td>917.4417328104712</td>
+<td>96.7634864</td>
+<td>88.27913423</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The negative minimum hydraulic pressure value is unusual and should be further investigated. It may be necessary to identify the root cause of this anomaly, such as sensor calibration issues or system malfunctions.</p>
+</blockquote>
+<blockquote>
+<p>The maximum hydraulic pressure value of 191 bar represents the upper extreme of system operation. It's essential to ensure that the system can safely handle and manage such high-pressure conditions.</p>
+</blockquote>
+<blockquote>
+<p>The standard deviation and variance values indicate substantial variability in hydraulic pressure data. This suggests that the system may operate under a wide range of conditions. Investigate the causes of this variability and take corrective actions if needed.</p>
+</blockquote>
+<blockquote>
+<p>The right-skewed distribution, as indicated by the median and average, suggests that the system frequently operates at lower pressure levels but occasionally experiences higher-pressure spikes.</p>
+</blockquote>
+<blockquote>
+<p>Monitoring the mode value of 88.28 bar can help identify the most common operational pressure level and enable adjustments if necessary.</p>
+</blockquote>
+<h3 id="outliers-of-hydrolic-pressure-values">Outliers of <code>hydrolic pressure</code> values .</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) <span class="hljs-keyword">AS</span> q1,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">median</span>,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) <span class="hljs-keyword">AS</span> q3,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) - <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure)) <span class="hljs-keyword">AS</span> lower_bound,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) + <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Hydraulic_Pressure)) <span class="hljs-keyword">AS</span> upper_bound
+<span class="hljs-keyword">FROM</span> machine_downtime;
+
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>&quot;q1&quot;</th>
+<th>&quot;median&quot;</th>
+<th>&quot;q3&quot;</th>
+<th>&quot;lower_bound&quot;</th>
+<th>&quot;upper_bound&quot;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>76.355</td>
+<td>96.7634864</td>
+<td>126.41572687499999</td>
+<td>1.263909687500032</td>
+<td>201.50681718749996</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Q1 (25th Percentile): 76.35</li>
+<li>Median (50th Percentile): 96.76</li>
+<li>Q3 (75th Percentile): 126.42</li>
+<li>Lower Bound for Outliers: 1.26</li>
+<li>Upper Bound for Outliers: 201.51<br>
+These statistics represent the quartiles and bounds for identifying potential outliers in the hydraulic pressure data. Data points below 1.26 or above 201.51 can be considered outliers. The median value of 96.76 provides a measure of the central tendency of the data, and quartiles help assess the data distribution.</li>
+</ul>
+<h3 id="detecting-the-outlier">Detecting the outlier</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> Hydraulic_Pressure
+<span class="hljs-keyword">FROM</span> machine_downtime
+<span class="hljs-keyword">WHERE</span> Hydraulic_Pressure &lt; <span class="hljs-number">1.26</span> <span class="hljs-keyword">OR</span> Hydraulic_Pressure &gt; <span class="hljs-number">201.51</span>;
+
+</div></code></pre>
+<h2 id="%22hydraulicpressure%22-1432645418">&quot;hydraulic_pressure&quot;
+-14.32645418</h2>
+<h2 id="82-eda-analysis-for-the-column-name-coolantpressure">8.2: EDA analysis for the column name 'coolant_pressure</h2>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>,
+    <span class="hljs-keyword">MIN</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> min_Coolant_Pressure,
+    <span class="hljs-keyword">MAX</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> max_Coolant_Pressure,
+    <span class="hljs-keyword">AVG</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> avg_Coolant_Pressure,
+    <span class="hljs-keyword">SUM</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> sum_Coolant_Pressure,
+    <span class="hljs-keyword">STDDEV</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> stddev_Coolant_Pressure,
+    <span class="hljs-keyword">VARIANCE</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> variance_Coolant_Pressure,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) <span class="hljs-keyword">AS</span> median_Coolant_Pressure,
+    <span class="hljs-keyword">MODE</span>() <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) <span class="hljs-keyword">AS</span> mode_Coolant_Pressure
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>&quot;count&quot;</th>
+<th>&quot;min_coolant_pressure&quot;</th>
+<th>&quot;max_coolant_pressure&quot;</th>
+<th>&quot;avg_coolant_pressure&quot;</th>
+<th>&quot;sum_coolant_pressure&quot;</th>
+<th>&quot;stddev_coolant_pressure&quot;</th>
+<th>&quot;variance_coolant_pressure&quot;</th>
+<th>&quot;median_coolant_pressure&quot;</th>
+<th>&quot;mode_coolant_pressure&quot;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2500</td>
+<td>0.325</td>
+<td>11.35</td>
+<td>4.94705847351793</td>
+<td>12273.652072797984</td>
+<td>0.9973571809758427</td>
+<td>0.99472134644408</td>
+<td>4.939960216</td>
+<td>4.566853902</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The statistics reveal a wide range of pressure values within the dataset. The minimum recorded coolant pressure, at 0.325 bar, suggests that the system occasionally operates at relatively low pressure levels. This could be indicative of specific conditions or instances where lower pressures are required. On the other end of the spectrum, the maximum coolant pressure recorded is 11.35 bar, representing the upper limit of the system's pressure capacity. This maximum value offers insights into the system's ability to handle high-pressure conditions, potentially during peak operational demands.</p>
+</blockquote>
+<blockquote>
+<p>The average coolant pressure, calculated at approximately 4.95 bar, serves as a vital indicator of the system's typical operating pressure. This value offers an understanding of the central tendency within the dataset. Alongside the average, the median coolant pressure, approximately 4.94 bar, further emphasizes the symmetrical distribution of the data.</p>
+</blockquote>
+<blockquote>
+<p>Further insights into the data's dispersion are provided through the standard deviation and variance calculations. The standard deviation, at approximately 0.997, suggests some degree of variability in the coolant pressure data. This variability may arise from different operating conditions or system responses. The variance, approximately 0.995, provides a measure of how spread out the data is, representing the square of the standard deviation.</p>
+</blockquote>
+<blockquote>
+<p>The mode of the coolant pressure data, approximately 4.57 bar, signifies the most frequently occurring pressure level within the dataset. Understanding the mode can help identify typical operational states and potential areas of focus for system optimization.</p>
+</blockquote>
+<h3 id="the-iqr-data">The IQR data</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) <span class="hljs-keyword">AS</span> q1,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">median</span>,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) <span class="hljs-keyword">AS</span> q3,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) - <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure)) <span class="hljs-keyword">AS</span> lower_bound,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) + <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Pressure)) <span class="hljs-keyword">AS</span> upper_bound
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>&quot;q1&quot;</th>
+<th>&quot;median&quot;</th>
+<th>&quot;q3&quot;</th>
+<th>&quot;lower_bound&quot;</th>
+<th>&quot;upper_bound&quot;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.462463542</td>
+<td>4.939960216</td>
+<td>5.518401201</td>
+<td>2.8785570535000007</td>
+<td>7.102307689499999</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>With the calculated lower and upper bounds for outliers, at 2.88 and 7.10, respectively, we can effectively identify data points that fall outside the expected range. Outliers, in this context, are those data points that either significantly deviate from the central data distribution by being too low or too high.</p>
+</blockquote>
+<blockquote>
+<p>Handling outliers is crucial for maintaining data integrity and making informed decisions. Investigating these unusual data points can lead to valuable insights about the system's behavior or potential data quality issues.</p>
+</blockquote>
+<h3 id="the-outlier-distribution">The outlier distribution</h3>
+<table>
+<thead>
+<tr>
+<th>Coolant Pressure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11.35</td>
+</tr>
+<tr>
+<td>11.3</td>
+</tr>
+<tr>
+<td>0.325</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>These data points have values either significantly higher (11.35 and 11.3) or significantly lower (0.325) than the central data distribution of the coolant pressure. It's important to further investigate these outliers to determine the underlying causes. These outliers may represent exceptional conditions, measurement errors, or other unique events that require special attention in your analysis or operations.</p>
+</blockquote>
+<hr>
+<h1 id="column-eda-analysis-for-airsystempressure-analysis">Column EDA analysis for <code>Air_System_Pressure</code> analysis</h1>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>,
+    <span class="hljs-keyword">MIN</span>(Air_System_Pressure) <span class="hljs-keyword">AS</span> min_Air_System_Pressure,
+    <span class="hljs-keyword">MAX</span>(Air_System_Pressure) <span class="hljs-keyword">AS</span> max_Air_System_Pressure,
+    <span class="hljs-keyword">AVG</span>(Air_System_Pressure) <span class="hljs-keyword">AS</span> avg_Air_System_Pressure,
+    <span class="hljs-keyword">SUM</span>(Air_System_Pressure) <span class="hljs-keyword">AS</span> sum_Air_System_Pressure,
+    <span class="hljs-keyword">STDDEV</span>(Air_System_Pressure) <span class="hljs-keyword">AS</span> stddev_Air_System_Pressure,
+    <span class="hljs-keyword">VARIANCE</span>(Air_System_Pressure) <span class="hljs-keyword">AS</span> variance_Air_System_Pressure,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) <span class="hljs-keyword">AS</span> median_Air_System_Pressure,
+    <span class="hljs-keyword">MODE</span>() <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) <span class="hljs-keyword">AS</span> mode_Air_System_Pressure
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<blockquote>
+<p>he dataset contains 2,500 observations of air system pressure measurements, offering insights into the operational behavior of the system. The statistics computed for the &quot;Air_System_Pressure&quot; data reveal key characteristics. The minimum air system pressure recorded is 5.063 bar, indicating the lower end of pressure levels within the system. On the other hand, the maximum air system pressure observed is 7.974 bar, showcasing the system's ability to handle higher-pressure conditions when necessary. The average air system pressure, approximately 6.499 bar, serves as a central indicator of the typical operating pressure, emphasizing the stability of the system's performance. The calculated standard deviation, around 0.407, provides insight into the data's variability, which suggests a relatively consistent operating range. The variance, approximately 0.166, highlights the data's spread. The median air system pressure, at approximately 6.505 bar, aligns closely with the average, indicating a symmetric distribution. The mode, around 5.629 bar, represents the most frequently occurring air system pressure level within the dataset.</p>
+</blockquote>
+<h3 id="81-calculate-the-iqr-data">8.1: Calculate the iqr data</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) <span class="hljs-keyword">AS</span> q1,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">median</span>,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) <span class="hljs-keyword">AS</span> q3,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) - <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure)) <span class="hljs-keyword">AS</span> lower_bound,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) + <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Air_System_Pressure)) <span class="hljs-keyword">AS</span> upper_bound
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>&quot;q1&quot;</th>
+<th>&quot;median&quot;</th>
+<th>&quot;q3&quot;</th>
+<th>&quot;lower_bound&quot;</th>
+<th>&quot;upper_bound&quot;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>6.2179865485</td>
+<td>6.5051914</td>
+<td>6.780550364</td>
+<td>5.3741408252500005</td>
+<td>7.62439608725</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The first quartile (Q1) is calculated at approximately 6.218, representing the 25th percentile of the data. This indicates the lower range of air system pressure levels, defining the bottom 25% of observations. The median, approximately 6.505, serves as a measure of central tendency, reflecting the point where 50% of the data falls below and 50% above. Finally, the third quartile (Q3), approximately 6.781, represents the 75th percentile and signifies the upper range of air system pressure levels, encompassing the top 25% of observations.</p>
+</blockquote>
+<blockquote>
+<p>To identify potential outliers, the Interquartile Range (IQR) method was applied. The calculated lower bound for outliers is 5.374, and the upper bound is 7.624. Data points falling below 5.374 or exceeding 7.624 are considered potential outliers, indicating air system pressure values that significantly deviate from the central distribution.</p>
+</blockquote>
+<h3 id="83-the-outliers-values-are">8.3: The outliers values are</h3>
+<p>SELECT Air_System_Pressure
+FROM machine_downtime
+WHERE Air_System_Pressure &lt; 5.374 OR Air_System_Pressure &gt; 7.624;</p>
+<table>
+<thead>
+<tr>
+<th>air_system_pressure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.091411159</td>
+</tr>
+<tr>
+<td>5.063480035</td>
+</tr>
+<tr>
+<td>7.971606819</td>
+</tr>
+<tr>
+<td>7.804750131</td>
+</tr>
+<tr>
+<td>5.366874865</td>
+</tr>
+<tr>
+<td>7.712440729</td>
+</tr>
+<tr>
+<td>7.973991528</td>
+</tr>
+<tr>
+<td>7.781150882</td>
+</tr>
+<tr>
+<td>5.329776651</td>
+</tr>
+<tr>
+<td>5.151876018</td>
+</tr>
+<tr>
+<td>5.305505788</td>
+</tr>
+<tr>
+<td>7.644785584</td>
+</tr>
+<tr>
+<td>5.283833449</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The &quot;air_system_pressure&quot; data consists of thirteen measurements taken over a certain period, with values ranging from approximately 5.06 to 7.97. These readings likely pertain to air pressure within a system or environment, and their variations may be indicative of changes or fluctuations within that system, which could be of interest for monitoring and analysis.</p>
+</blockquote>
+<hr>
+<h1 id="column-eda-analysis-for-coolanttemperature-analysis">Column EDA analysis for <code>Coolant_Temperature </code>analysis</h1>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">count</span>,
+    <span class="hljs-keyword">MIN</span>(Coolant_Temperature) <span class="hljs-keyword">AS</span> min_Coolant_Temperature,
+    <span class="hljs-keyword">MAX</span>(Coolant_Temperature) <span class="hljs-keyword">AS</span> max_Coolant_Temperature,
+    <span class="hljs-keyword">AVG</span>(Coolant_Temperature) <span class="hljs-keyword">AS</span> avg_Coolant_Temperature,
+    <span class="hljs-keyword">SUM</span>(Coolant_Temperature) <span class="hljs-keyword">AS</span> sum_Coolant_Temperature,
+    <span class="hljs-keyword">STDDEV</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> stddev_Coolant_Temperature,
+    <span class="hljs-keyword">VARIANCE</span>(Coolant_Pressure) <span class="hljs-keyword">AS</span> variance_Coolant_Temperature,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) <span class="hljs-keyword">AS</span> median_Coolant_Temperature,
+    <span class="hljs-keyword">MODE</span>() <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) <span class="hljs-keyword">AS</span> mode_Coolant_Temperature
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>output: &quot;count&quot;</th>
+<th>&quot;min_coolant_temperature&quot;</th>
+<th>&quot;max_coolant_temperature&quot;</th>
+<th>&quot;avg_coolant_temperature&quot;</th>
+<th>&quot;sum_coolant_temperature&quot;</th>
+<th>&quot;stddev_coolant_temperature&quot;</th>
+<th>&quot;variance_coolant_temperature&quot;</th>
+<th>&quot;median_coolant_temperature&quot;</th>
+<th>&quot;mode_coolant_temperature&quot;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2500</td>
+<td>4.1</td>
+<td>98.2</td>
+<td>18.559887459807154</td>
+<td>46177.0000000002</td>
+<td>0.9973571809758427</td>
+<td>0.99472134644408</td>
+<td>21.2</td>
+<td>26.4</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The statistical analysis of the &quot;Coolant_Temperature&quot; data provides essential insights into the temperature characteristics. With 2,500 observations, the dataset reveals a wide temperature range. The minimum recorded temperature is 4.1°C, indicating the lower extreme of the operating conditions. In contrast, the maximum temperature observed is 98.2°C, signifying the upper limit of the system's temperature capacity. The average coolant temperature, approximately 18.56°C, represents the central tendency of the data, highlighting the typical temperature range for the system. The standard deviation, about 0.997, indicates the data's variability, suggesting fluctuations in the operating temperature. The variance, approximately 0.995, reflects the spread of the data. The median temperature, at around 21.2°C, aligns closely with the average, indicating a symmetric distribution. The mode, approximately 26.4°C, represents the most frequently occurring temperature within the dataset.</p>
+</blockquote>
+<h3 id="the-iqr-data">The IQR data</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) <span class="hljs-keyword">AS</span> q1,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.5</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) <span class="hljs-keyword">AS</span> <span class="hljs-keyword">median</span>,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) <span class="hljs-keyword">AS</span> q3,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) - <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature)) <span class="hljs-keyword">AS</span> lower_bound,
+    <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) + <span class="hljs-number">1.5</span> * (<span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.75</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature) - <span class="hljs-keyword">PERCENTILE_CONT</span>(<span class="hljs-number">0.25</span>) <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Coolant_Temperature)) <span class="hljs-keyword">AS</span> upper_bound
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<blockquote>
+<p>The quartile analysis of the &quot;Coolant_Temperature&quot; data highlights key temperature characteristics. The first quartile (Q1) is calculated at approximately 10.4°C, signifying the 25th percentile of the data. This represents the lower range of temperature values, covering the bottom 25% of observations. The median, approximately 21.2°C, serves as a central measure, representing the point where 50% of the data falls below and 50% above. The third quartile (Q3), at about 25.6°C, represents the 75th percentile and captures the upper range of temperature values, encompassing the top 25% of observations.</p>
+</blockquote>
+<blockquote>
+<p>To identify potential outliers, the Interquartile Range (IQR) method was applied. The lower bound for outliers is -12.4°C, and the upper bound is 48.4°C. Data points falling below -12.4°C or exceeding 48.4°C are considered potential outliers, indicating temperature values significantly deviating from the central distribution.</p>
+</blockquote>
+<h3 id="detecting-outliers">Detecting outliers</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> Coolant_Temperature
+<span class="hljs-keyword">FROM</span> machine_downtime
+<span class="hljs-keyword">WHERE</span> Coolant_Temperature &lt; <span class="hljs-number">-12.4</span> <span class="hljs-keyword">OR</span> Coolant_Temperature &gt; <span class="hljs-number">48.4</span>;
+</div></code></pre>
+<h2 id="%22coolanttemperature%22">&quot;coolant_temperature&quot;</h2>
+<p>98.2</p>
+<blockquote>
+<p>The value of 98.2°C for &quot;Coolant_Temperature&quot; stands out as a significant outlier, significantly exceeding the upper bound for potential outliers calculated through the Interquartile Range (IQR) method. This exceptional temperature reading may indicate a unique event, measurement error, or a condition requiring special attention. Investigating and addressing such outliers is vital for maintaining data integrity and ensuring accurate system analysis and decision-making.</p>
+</blockquote>
+<hr>
+<h1 id="9-eda-on-the-catagorical-or-text-columns">9: EDA on the catagorical or text columns</h1>
+<ol>
+<li>We have 3 column which are varchar datatype.</li>
+</ol>
+<p>Frequency distribution in &quot;Machine_ID&quot; column</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span> machine_id, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> Frequency
+<span class="hljs-keyword">FROM</span> machine_downtime
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> machine_id
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Frequency <span class="hljs-keyword">DESC</span>;
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">--Unique Values in "machine_id" column</span>
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">DISTINCT</span> machine_id) <span class="hljs-keyword">AS</span> unique_category_count
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Mode in the "machine_id" column</span>
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">MODE</span>() <span class="hljs-keyword">WITHIN</span> <span class="hljs-keyword">GROUP</span> (<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> machine_id) <span class="hljs-keyword">AS</span> mode_category
+<span class="hljs-keyword">FROM</span> machine_downtime;
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">--Checking NULL VALUES in "machine_id"</span>
+
+<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">COUNT</span>(<span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> machine_id <span class="hljs-keyword">IS</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">THEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">ELSE</span> <span class="hljs-literal">NULL</span> <span class="hljs-keyword">END</span>) <span class="hljs-keyword">AS</span> missing_category_count
+<span class="hljs-keyword">FROM</span> machine_downtime;
+
+</div></code></pre>
+<h1 id="10-running-differend-eda-combination-to-get-insides">10: Running differend EDA combination to get insides.</h1>
+<ol>
+<li>Try to found number of downtime , machine id and dates when ;machine failure happens</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>   <span class="hljs-built_in">date</span>, machine_id, <span class="hljs-keyword">count</span>(downtime)
+<span class="hljs-keyword">FROM</span>
+machine_downtime
+<span class="hljs-keyword">WHERE</span> downtime = <span class="hljs-string">'Machine_Failure'</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>, <span class="hljs-number">2</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>, <span class="hljs-number">3</span> <span class="hljs-keyword">DESC</span>
+</div></code></pre>
+<p>2.Finding on which t=year which machine has failure  count the number of its downtime</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+	<span class="hljs-keyword">EXTRACT</span> (<span class="hljs-keyword">YEAR</span> <span class="hljs-keyword">from</span> <span class="hljs-built_in">DATE</span>), machine_id, <span class="hljs-keyword">count</span>(downtime)
+<span class="hljs-keyword">FROM</span>
+	machine_downtime
+<span class="hljs-keyword">WHERE</span> 
+	downtime = <span class="hljs-string">'Machine_Failure'</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>, <span class="hljs-number">2</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> <span class="hljs-number">1</span>, <span class="hljs-number">3</span> <span class="hljs-keyword">DESC</span>
+</div></code></pre>
+<ol start="3">
+<li>The dates and machine_id when machine failed at the lowest &quot;Hydraulic Pressure&quot;</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+<span class="hljs-built_in">date</span>, machine_id, <span class="hljs-keyword">MIN</span> (Hydraulic_Pressure) <span class="hljs-keyword">AS</span> Min_Hyd_Presure
+<span class="hljs-keyword">FROM</span>
+machine_downtime
+<span class="hljs-keyword">WHERE</span>
+	downtime = <span class="hljs-string">'Machine_Failure'</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 
+	<span class="hljs-number">1</span>, machine_id
+</div></code></pre>
+<ol start="4">
+<li>The dates and machine_id when machine failed at the Highest &quot;Hydraulic Pressure&quot;</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-keyword">SELECT</span>
+<span class="hljs-built_in">date</span>, machine_id, <span class="hljs-keyword">MAX</span> (Hydraulic_Pressure) <span class="hljs-keyword">AS</span> Max_Hyd_Presure
+<span class="hljs-keyword">FROM</span>
+machine_downtime
+<span class="hljs-keyword">WHERE</span>
+	downtime = <span class="hljs-string">'Machine_Failure'</span>
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> 
+	<span class="hljs-number">1</span>, machine_id
+<span class="hljs-keyword">LIMIT</span> <span class="hljs-number">10</span>
+</div></code></pre>
+
+</body>
+</html>
